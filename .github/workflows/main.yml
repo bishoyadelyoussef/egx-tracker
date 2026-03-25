@@ -1,25 +1,33 @@
 name: Daily EGX Scan
 on:
-  workflow_dispatch:
+  workflow_dispatch: # تشغيل يدوي للتحقق
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write # إعطاء السيرفر حق الكتابة والرفع
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: Install
-        run: pip install yfinance pandas ta
-      - name: Run
-        run: python stock.py
-      - name: Push
+
+      - name: Install Libraries
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          python -m pip install --upgrade pip
+          pip install yfinance pandas ta
+
+      - name: Run Tracker
+        run: python stock.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add daily_report.json
-          git commit -m "Update" || exit 0
+          git commit -m "Update EGX Data" || echo "No changes"
           git push
