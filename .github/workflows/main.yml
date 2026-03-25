@@ -1,17 +1,16 @@
 name: Daily EGX Scan
 
 on:
-  workflow_dispatch: # Manual trigger
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
     permissions:
       contents: write
-
+      
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -19,16 +18,17 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Setup Dependencies
-        run: pip install yfinance pandas_ta rich
+      - name: Install Libraries
+        run: |
+          pip install yfinance pandas_ta rich
 
       - name: Run Script
         run: python stock.py
 
-      - name: Push Report
+      - name: Save Results
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add -A
-          git commit -m "Update Report" || exit 0
+          git add daily_report.json
+          git commit -m "Update EGX Report" || echo "No changes"
           git push
