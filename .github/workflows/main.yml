@@ -2,15 +2,13 @@ name: Daily EGX Scan
 
 on:
   schedule:
-    # Runs at 13:00 UTC (which is 3:00 PM Cairo Time)
-    - cron: '0 13 * * *'
-  workflow_dispatch: # Allows you to run it manually anytime for testing
+    - cron: '0 13 * * *' # Runs at 13:00 UTC (3:00 PM Cairo Time)
+  workflow_dispatch: # Allows manual run for testing
 
 jobs:
   build:
     runs-on: ubuntu-latest
     
-    # Required if your script needs to write/save files (like daily_report.json)
     permissions:
       contents: write
 
@@ -19,24 +17,22 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/set-up-python@v5
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip' # Speeds up future runs by caching libraries
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run EGX Analyzer
+      - name: Run script
         run: python stock.py
 
-      - name: Commit and Push Report
-        # This part ensures that if a new .json report is created, it's saved to your repo
+      - name: Commit and push JSON report
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add daily_report.json
-          git commit -m "Auto-update: Daily EGX Report $(date +'%Y-%m-%d')" || exit 0
+          git commit -m "Update daily report $(date +'%Y-%m-%d')" || exit 0
           git push
