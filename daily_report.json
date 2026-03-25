@@ -1,32 +1,23 @@
-{
-  "timestamp": "2026-03-25T20:35:40.878626+00:00",
-  "stocks": [
+[
     {
-      "Ticker": "TMGH.CA",
-      "Price": 78.5,
-      "RSI": 43.76,
-      "SMA": 81.06,
-      "Action Strategy": "Observation (Wait for setup)",
-      "Strategy": "Observation (Wait for setup)",
-      "Alert": "Stable"
+        "Ticker": "TMGH.CA",
+        "Price": 78.5,
+        "RSI": 43.68,
+        "SMA_20": 81.06,
+        "Strategy": "Wait (Neutral)"
     },
     {
-      "Ticker": "COMI.CA",
-      "Price": 124.1,
-      "RSI": 46.92,
-      "SMA": 126.64,
-      "Action Strategy": "Observation (Wait for setup)",
-      "Strategy": "Observation (Wait for setup)",
-      "Alert": "Price Cross Alert"
+        "Ticker": "COMI.CA",
+        "Price": 124.1,
+        "RSI": 46.95,
+        "SMA_20": 126.64,
+        "Strategy": "Wait (Neutral)"
     },
     {
-      "Ticker": "EFIH.CA",
-      "Price": 18.48,
-      "RSI": 37.26,
-      "SMA": 19.5,
-      "Action Strategy": "Observation (Wait for setup)",
-      "Strategy": "Observation (Wait for setup)",
-      "Alert": "Stable"
+        "Ticker": "EFIH.CA",
+        "Price": 18.48,
+        "RSI": 37.05,
+        "SMA_20": 19.5,
+        "Strategy": "Wait (Neutral)"
     }
-  ]
-}
+]
